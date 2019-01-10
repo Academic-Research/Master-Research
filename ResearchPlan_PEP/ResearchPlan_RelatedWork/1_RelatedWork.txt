@@ -1,0 +1,256 @@
+Annamali2013Comparison    
+
+Navigation based on Kalman filter.
+Hardware components of the navigation system (eletronic compasses): TCM2, HMR3000 and KVH-C100.
+Guidance based on waypoint LOS.
+Control based on Model Predictive Control (MPC) and Linear Quadratic Gaussian (LQG)
+
+Annamali2013Comparison \etal~\cite{Annamali2013Comparison} present a guidance system mainly composed by waypoint line of sigth scheme.
+So, the \ac{USV} tries to go straigth ahead from its curernt position untill the next waypoint. If any collision is detected
+the guidance system decides next actions according to the line of sights system. For waypoint following tha control system was composed by a MPC autopilot.
+In order to decide whether a waypoint has been reached or not, the guidance system considers a \ac{COA} around each waypoint.
+The suggested \ac{COA} radius is eauql to the length of the vessel. The current localization is determined by the navigation system equipped with GPS.
+For determination of the current heading they combined the information provided by three eletronic compasses (TCM2, HMR3000 and KVH-C100).
+For evaluation the system was simulated.
+
+Benjamin2004COLREGS   
+
+For collision avoidance Benjamin \etal~\cite{Benjamin2004COLREGS} explores the usage of a technique entitled behavior-based control and multi-objective action selection.
+Different behaviors are defined corresponding to each situation possible such as obstacle avoidance or feep current mission.
+Each behavior define objective functions that rates all possible actions with repect to the corresponding COLREGS rule.
+The decision space for vehicle action is defined based on variables such as course, speed and intended-time.
+They used interval programming to find optimal actions.
+
+Tests are performed with four real kayaks. The navigation system is capable of determine its own position from GPS.
+And the USV broadcasts their positions to each other. 
+There is no specific detection system, after receive a position information tha USV assumes that the GPS information received correspond to another USV with which it must avoid collision.
+
+Guidance:
+Navigation:
+Control:
+
+Benjamin2006Method                          
+
+Bertaska2013Experimental                    
+
+Breivik2008Straight                         
+
+Caccia2005Sampling                          
+
+Caccia2008BasicNavigationGuidanceAndCont    
+
+Campbell2013Automatic                       
+
+Desa2007Small                               
+
+El-Gaaly2013Visual                          
+
+Fredriksen2006Global                        
+
+Healey2007Collaborative_Unmanned_Systems_for_Maritime_and_Port_Security 
+
+Kim2013Curvature                            
+
+Kim2014Angular                              
+
+Kuwata2014Safe                              
+
+Larson2006Autonomous      
+
+    Larson \etal~\cite{Larson2006Autonomous} explore the usage of A* in combination with \ac{VO} \cite{Fiorini1998Motion} as path planner for global guidance. 
+    A* is used to avoid stationary obstacles and \ac{VO} is used to avoid dynamic obstacles such as other vessels.
+    The navigation is based on waypoints, and the global guidance system is responsible for continuous modification of the existing waypoints route to plan around obstacles detected with long-range sensors.
+    %AMA eu havia pensando em usar algo assim inicialmente p teu caso. so adicionar alguns novos wyapoints p fazer o desvio
+    The global guidance system presented by Larson \etal~use the information provided by \ac{AIS}, \ac{ARPA} contacts, and nautical charts.
+    The \ac{AIS} system receives position, speed and course data broadcasts from other marine vessels with compatible systems.
+    The \ac{ARPA} system is capable of creating tracks using radar contacts and can calculate the tracked object's course, speed, and \ac{CPA}, thereby knowing if there is a danger of collision with the other ship or landmass.
+    Nautical charts can provide information about water depth, land heights, coastline, navigable ways, navigational hazards, tides, currents, and human-made structures such as harbours, buildings and bridges.
+    Nautical charts are used as basic information for running A* and definition of waypoints.
+    \ac{AIS} and \ac{ARPA} are used as basic information for running \ac{VO} and definition of waypoints.
+       
+    There is a perception system for near-field obstacles detection, it is composed of \ac{MWR}, Monocular Camera, and \ac{LADAR}.
+    The local guidance system combine the information provided by the perception system and generates a local world-model.
+    When an obstacle is detected the new trajectory is defined based on the local world-model and a behavior-based approach.
+    There are three behaviors, keep the last planned path, collision avoidance, and free-space path.
+    The decision is made through votes. The collision avoidance behavior vote is two times heavier and generates paths in arc format as shown is \ref{Larson2006Autonomous_Arcs}.
+
+Larson2007Advances                          
+
+Guidance: Global + Local
+Two levels of map. 
+One large overview map, embracing a greater distance but with a lower resolution. 
+The information on this map is collected from digital nautical charts (DNC), ARPA contacts, and AIS contacts.
+The second is smaller and relative to the area around the USV.
+The information on this map is collected from monocular and stereo vision.
+In this work path planning for global guidance is responsible for planning routes not only around stationary obstacles but around moving obstacles in the far-field.
+
+They used Probabilistic Roadmaps, genetic algorithms and Markov Chain Monte-Carlo for collision avoidance on global guidance.
+
+
+
+
+Collision Avoidance: Occupancy grid
+Overtaking - USV moving at a higher speed and both vessels are moving at the same heading within 45 degrees and approaching within 200m
+Head-on - USV and other vessel moving at the opposite heading within 45 degrees and approaching within 200m
+Crossing - USV and other vessel moving along a heading between 45 and 135 degrees greater than the USV and approach within 200m
+Navigation:
+Control:
+Perception:
+
+
+Lee2004Fuzzy_logic_for_autonomous_navigation_of_marine_   
+
+Fuzzy logic for COLREGS.
+Virtual Force Field for navigation/guidance?
+They present a modification of the tradionally Virtual Force Field algorithm, entitled Modified Virtual Force Field (MVFF).
+The MVFF method can be used in either collision avoidance or track-keeping modes.
+Worried about static and moving obstacles.
+Simulation for evalution.
+
+Control: 
+depends on desired taks, ship dynamics, ship model, course keeping controller and track-keeping controller
+the course-keeping controller attempts to follow the heading angle command. PID for course-keeping.
+the track-keepping controller determines the desired heading in relation to the desired track.
+
+VFF method:
+At any given point in time the USV is under influence of two forces: 
+Fg which acts puling the USV towards the goal and Fr which begins on obstacles and acts repulsing the USV
+
+Lee propose the usage of Virtual Force Field for USV COLREGS-Compliant Collision Avoidance.
+They present a modification of the tradionally Virtual Force Field algorithm based on fuzzy logic and entitled Modified Virtual Force Field (MVFF).
+The focus is on the determination of the desired USV heading angle components. 
+The matematical components proposed consists on keep-track, goal and collision avoidance angles.
+
+The USV route is defined by waypoints, between consectivelly waypoints it is considered a straight line that should be followed
+but movement that leads to distanding from the desired path happens when for example a collision avoidance movement is need.
+Therefore it is desired that USV motion consider a combination of go towards the goal/next waypoint and keep tracking.
+
+The motion of the USV is mainly defined by the heading angle, Lee propose the following formula:
+\begin{equation}
+\Psi _d = \Psi _t _k + \Psi _c _a
+\end{equation}
+
+The \Psi $_t _k$ angle is related to a combination of the virtual forces that attract the USV, respecting a proportion, to the desired track and towards the goal. 
+The proportion is defined using fuzzy logic to determine how near/far the USV is from the goal.
+The \Psi _c _a angle is defined using fuzzy logic after detection of obstacle direction, orientation, distance, relative velocity and position relative to the USV.
+Each detected value is translated into a weight for fuzzy logic decision. 
+For simplicity it is assumed that the USV is capble of only turn right. 
+Simulation test demostrates that the presented method is applicable for COLREGS rules 13, 14, 16, 16, 17, and 18.
+
+
+Naeem2012COLREGs_a  
+
+    For global guidance, Naeem \etal~\cite{Naeem2012COLREGS} use an A*-based algorithm, entitled \ac{DPSS} \cite{Yang}. 
+    This method is based on a goal direction vector, being able to reduce the search time by up to 50%. 
+    The \ac{DPSS} algorithm produces waypoints around obstacles that form a smoother path with less sharp turns than A*.
+    For local guidance, they use waypoint trajectory by \ac{LOS} \cite{Healey1993Multivariable}. 
+    Moreover, aimming on \ac{COLREGS}-complaint collision avoidance, they present a manual biasing scheme consisting on avoid possible collision situation detected always sailing towards the \ac{USV} starboard side.
+    They argue that always avoiding obstacles, heading towards the starboard side makes the system compliant to the COLREGS. 
+    For dynamic obstacles detection, it is suggested the usage of \ac{LIDAR} and cameras. 
+    And for the navigation system the suggest the usage of \ac{GPS}
+    The guidance system is evaluated trough software simulation.
+           
+    For collision avoidance, Naeem \etal~assume a \ac{COR} around each detected obstacle.
+    For navigation Naeem \etal~assume a \ac{COA} around each waypoint. After the \ac{USV} enters the \ac{COA} the mission planner selects the next waypoint.
+    Every time the distance between the \ac{USV} and an obstacle is less or equal than the \ac{COR}, the local guidance system assumes.
+    Both dynamic and stationary obstacles are considered. 
+    For the control system, Naeem \etal~present a PID autopilot. 
+
+    
+Naeem2012Integrated                         
+
+Naus2013Idea                                
+
+    In Naus \etal~\cite{Naus2013Idea} the global guidance system uses A* for path planning. 
+    Static data about the environment (topography, coastline and safe way), extracted from electronic navigational charts, 
+    and dynamic data (position of other ships), extracted from \ac{DGPS}, \ac{AIS}, and \ac{ARPA} sensors are used for generation of a map representation of the world.
+    This work do not treat collision avoidance for local guidance.
+    
+
+The 
+
+
+
+Peng2013Adaptive                            
+
+Sharma2013Genetic                           
+
+Soltan2009Trajectory                        
+
+Soltan, Ashrafiuon, and Muske (2009) present the usage of ordinary differential equations (ODEs) 
+for aproximation of obstacles position, the ODEs generate ellipsial fields around the obstacles.
+In this study the USV mission consists on track another target boat.
+The guidance system try to track the target boat going towards it in a stright line, 
+if any obstacle is detected the guidance system define a trajectory based on ODEs. 
+If the obstacle at any time moves of the way or when the USV goes around the obstacle, the trajectory is then switched to another
+The evaluation of the system was done by simulation and any obstacle between the USV and the target boat, in any range, could be detect.
+
+
+
+
+
+Soltan2011ODE
+
+Svec2011Automated                           
+
+Svec2011Trajectory                          
+
+Svec2012Automated 
+
+Svec et al. present automated guidance plan synthesis based on Genetic Programming. An initial version
+of guidance plan is generated and then improved by detecting and fixing its shortcomings.
+The guidance plan is improved by data mining extraction of vehicle's states of failure and the usage
+of Genetic Programming. Their solution is applied to the context of blocking the advancement of a intruder 
+boat towards a valuable target.
+
+The guidance plan is represented as a composition of a main navigation controller and a set of navigation plans.
+
+The navigation controller is composed by 
+high-level navigation commands such as go-intruder-front, turn-right, turn-left, and, go-straight},
+conditional variables such as intruder-on-the-left/right/front/at-back, intruder-has-target-on-the-left/right, and usv-has-target-on-the-left/right,
+standard boolean values and operators such as if, true, false, and, or, and not,
+program blocks (seq2, seq3), 
+and system commands (usv-sensor, usv-velocity, and usv-match-intruder-velocity)
+
+The navigation plan is composed by high-level navigation commands and program blocks.
+
+The leaves of the decision tree can be conditional variables or navigation commands.
+The inner nodes can be conditionals variables, navigation commands, or system commands.
+
+Evaluation:     Verified on simulation.
+Application:    Blocking the advancement of a intruder boat towards a valuable target.
+
+Svec2012USV_Guidance_PredictiveModel        
+
+Tran2014Tracking                            
+
+Xu2007Multi                                 
+
+Xu2013FastPathRe-planningBasedOnFast        
+
+Zhuang2011Motion    
+
+
+Genetic Programming
+Genetic Programming is a automated programming technique, based on the automated composition of 
+a set of programming functional blocks into an increasing amount of modules for 
+generation of a structured solution with the desired functionality. 
+Genetic Programming explore random combination of functional blocks through generation of expressions 
+tree where each node is represents a functional block. Solutions are generates by combination, mutation and
+crossover between subtrees.
+
+For global guidance, ... use ... . 
+The required information is captured through ....
+For local guidance, ... use ... . 
+The required information is captured through ....
+The navigation system is composed of ...
+The control system is composed of ...
+The perception system is composed of ...
+
+Global guidance method:
+Global guidance data base:
+Local guidance method:
+Local guidance data base:
+Collision avoidance method:
+Navigation system components:
+
